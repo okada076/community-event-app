@@ -7,15 +7,11 @@ const EventModal = ({ isOpen, onClose, event }) => {
     <div className="modal-overlay">
       <div className="modal-content">
         <h2>イベント詳細</h2>
-        {event.length > 0 ? (
-          <ul>
-            {event.map((event, index) => (
-              <li key={index}>
-                <strong>{event.title}</strong><br />
-                {event.description}
-              </li>
-            ))}
-          </ul>
+        {event ? (
+          <div>
+            <strong>{event.title}</strong><br />
+            {event.description}
+          </div>
         ) : (
           <p>この日に登録されたイベントはありません。</p>
         )}
