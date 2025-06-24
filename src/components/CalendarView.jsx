@@ -12,7 +12,9 @@ const CalendarView = ({ onDateSelect }) => {
 
   const handleDateChange = (date) => {
     setValue(date)
-    const formattedDate = date.toISOString().split('T')[0]
+    const formatDate = (date) =>
+  `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+    const formattedDate = formatDate(date)
     const foundEvent = events.find(event => event.date === formattedDate)
 
     if (foundEvent) {
