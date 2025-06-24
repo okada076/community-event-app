@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import { events as initialEvents } from '../data/events'
@@ -7,19 +7,29 @@ import AddEventModal from './AddEventModal'
 const CalendarView = ({ onDateSelect }) => {
   const [value, setValue] = useState(new Date())
   const [events, setEvents] = useState(() => [...initialEvents])
-  const [selectedDate, setSelectedDate] = useState(null) // ← これが抜けているとエラーで真っ白になります
+  const [selectedDate, setSelectedDate] = useState(null)
+
+  // 🔹 localStorageから初期読み込み
+  useEffect(() => {
+    const saved = localStorage.getItem('events')
+    if (saved) {
+      setEvents(JSON.parse(saved))
+    }
+  }, [])
 
   const handleDateChange = (date) => {
     setValue(date)
     onDateSelect(date)
-    setSelectedDate(date) // モーダル表示のために設定
+    setSelectedDate(date)
   }
 
   const handleAddEvent = (eventData) => {
     const formattedDate = dateToString(selectedDate)
     const newEvent = { ...eventData, date: formattedDate }
 
-    setEvents([...events, newEvent])
+    const updatedEvents = [...events, newEvent]
+    setEvents(updatedEvents)
+    localStorage.setItem('events', JSON.stringify(updatedEvents)) // 🔹 ここで保存
     setSelectedDate(null)
   }
 
@@ -51,7 +61,7 @@ const CalendarView = ({ onDateSelect }) => {
         formatDay={(locale, date) => date.getDate()}
       />
 
-      {/* モーダル表示条件 */}
+      {/* モーダル */}
       {selectedDate && (
         <AddEventModal
           selectedDate={selectedDate}
