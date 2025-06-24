@@ -231,11 +231,17 @@ button:hover {
   color: blue !important;
 }
 
+.react-calendar__tile {
+  position: relative;
+}
+
 /* イベントありの日付に小さな丸印 */
 .react-calendar__tile--hasEvent::after {
   content: '';
-  display: block;
-  margin: 4px auto 0;
+  position: absolute;
+  bottom: 6px; /* 適宜調整可 */
+  left: 50%;
+  transform: translateX(-50%);
   width: 6px;
   height: 6px;
   background-color: #ff5722;
