@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
-import AddEventModal from './AddEventModal' // モーダル追加
+import { events as initialEvents } from '../data/events'
+import AddEventModal from './AddEventModal'
 
-const CalendarView = () => {
+const CalendarView = ({ onDateSelect }) => {
   const [value, setValue] = useState(new Date())
-  const [events, setEvents] = useState([]) // ← 登録されたイベント配列
-  const [selectedDate, setSelectedDate] = useState(null)
+  const [events, setEvents] = useState(() => [...initialEvents])
+  const [selectedDate, setSelectedDate] = useState(null) // ← これが抜けているとエラーで真っ白になります
 
-  // カレンダー日付選択時の処理
   const handleDateChange = (date) => {
     setValue(date)
-    setSelectedDate(date) // モーダル表示用に選択
+    onDateSelect(date)
+    setSelectedDate(date) // モーダル表示のために設定
   }
 
-  // イベント登録処理
   const handleAddEvent = (eventData) => {
     const formattedDate = dateToString(selectedDate)
     const newEvent = { ...eventData, date: formattedDate }
@@ -23,7 +23,6 @@ const CalendarView = () => {
     setSelectedDate(null)
   }
 
-  // 日付の比較用に 'YYYY-MM-DD' に変換
   const dateToString = (date) => {
     return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
   }
@@ -52,6 +51,7 @@ const CalendarView = () => {
         formatDay={(locale, date) => date.getDate()}
       />
 
+      {/* モーダル表示条件 */}
       {selectedDate && (
         <AddEventModal
           selectedDate={selectedDate}

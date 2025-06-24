@@ -22,7 +22,7 @@ const AddEventModal = ({ selectedDate, onSave, onClose }) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <h2>{selectedDate} のイベント登録</h2>
+        <h2>{selectedDate.toDateString()}</h2>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
