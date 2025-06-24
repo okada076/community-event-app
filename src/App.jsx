@@ -60,7 +60,7 @@ function App() {
 
   return (
     <div className="main-container">
-      <h1 className="app-title">地域イベントカレンダー 🏘️</h1>
+      <h1 className="app-title">地域イベントカレンダー📅🌈</h1>
 
       <div className="search-section">
         <SearchBar value={query} onChange={setQuery} onSearch={handleSearch} />
