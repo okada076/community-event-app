@@ -24,10 +24,9 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
+  background-color: #f7f8fa; /* 少し明るいグレー背景に */
+  font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
 }
 
 h1 {
@@ -115,4 +114,204 @@ button:focus-visible {
   border-radius: 8px;
   width: 90%;
   max-width: 500px;
+}
+
+
+input[type="text"] {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 16px;
+  width: 60%;
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+}
+
+button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+button:hover {
+  background-color: #1565c0;
+}
+
+
+.main-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.app-title {
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+}
+
+.results-section {
+  margin-bottom: 30px;
+}
+
+.calendar-section {
+  margin-bottom: 30px;
+}
+
+.search-section {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.selected-date {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.event-details {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 12px;
+}
+
+.event-item {
+  margin-bottom: 20px;
+}
+
+/* 曜日の文字（Mon〜Sun）の色を濃く */
+.react-calendar__month-view__weekdays {
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+/* 通常日付のフォントと色 */
+.react-calendar__tile {
+  color: #333;
+  font-size: 15px;
+}
+
+/* 選択中のタイル */
+.react-calendar__tile--active {
+  background: #1976d2;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+/* 今日の日付 */
+.react-calendar__tile--now {
+  background: #fff9c4;
+  color: #000;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+/* 前月・翌月の日付（必要なら少し濃く） */
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #bbb;
+}
+
+
+/* 日曜日に赤色 */
+.sunday {
+  color: red !important;
+}
+
+/* 土曜日に青色 */
+.saturday {
+  color: blue !important;
+}
+
+/* カレンダー全体を包む要素に丸みをつける */
+.react-calendar {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  border: none; 
+  font-size: 1.2rem; 
+  padding: 20px;     
+  width: 360px;      
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+/* オプション：タイルや日付部分も少し丸くしたい場合 */
+.react-calendar__tile {
+  position: relative;
+  border-radius: 8px;
+  font-size: 1.2rem;     
+  font-weight: 500;      
+  padding: 10px 6px; 
+}
+
+/* イベントありの日付に小さな丸印 */
+.react-calendar__tile--hasEvent::after {
+  content: '';
+  position: absolute;
+  bottom: 6px; /* 適宜調整可 */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background-color: #ff5722;
+  border-radius: 50%;
+}
+
+.calendar-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.react-calendar__navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  margin-bottom: 8px;
+}
+
+.react-calendar__navigation__label {
+  background-color: #f0f0f0; /* グレー背景 */
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  cursor: default;
+  text-align: center;
+}
+
+.react-calendar__navigation button {
+  color: #333;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.react-calendar__navigation button:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.app-title {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 }
