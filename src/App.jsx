@@ -35,6 +35,11 @@ function App() {
     setSearchResults(filtered)
   }
 
+  // 🗓️ 選択された日付に対応するイベントだけを抽出
+  const selectedEvents = selectedDate
+    ? events.filter(event => event.date === selectedDate.toISOString().split('T')[0])
+    : []
+
   return (
     <div>
       <h1 style={{ textAlign: 'center' }}>地域イベントカレンダー 🏘️</h1>
@@ -50,6 +55,18 @@ function App() {
       {selectedDate && (
         <div style={{ textAlign: 'center', marginTop: '20px' }}>
           <strong>選択された日付：</strong> {selectedDate.toDateString()}
+        </div>
+      )}
+
+      {selectedEvents.length > 0 && (
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <h2>イベント詳細</h2>
+          {selectedEvents.map((event, index) => (
+            <div key={index}>
+              <h3>{event.title}</h3>
+              <p>{event.description}</p>
+            </div>
+          ))}
         </div>
       )}
     </div>
