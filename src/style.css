@@ -241,3 +241,9 @@ button:hover {
   background-color: #ff5722;
   border-radius: 50%;
 }
+
+.calendar-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
