@@ -116,3 +116,68 @@ button:focus-visible {
   width: 90%;
   max-width: 500px;
 }
+
+
+input[type="text"] {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 16px;
+  width: 60%;
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+}
+
+button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+button:hover {
+  background-color: #1565c0;
+}
+
+
+.main-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+
+.app-title {
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+}
+
+.search-section {
+  margin-bottom: 20px;
+}
+
+.results-section {
+  margin-bottom: 30px;
+}
+
+.calendar-section {
+  margin-bottom: 20px;
+}
+
+.selected-date {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.event-details {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 12px;
+}
+
+.event-item {
+  margin-bottom: 20px;
+}

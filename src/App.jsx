@@ -35,34 +35,45 @@ function App() {
     setSearchResults(filtered)
   }
 
+  // ✅ ここで日付をセット
+  const handleDateSelect = (date) => {
+    setSelectedDate(date)
+  }
+
   // 🗓️ 選択された日付に対応するイベントだけを抽出
   const selectedEvents = selectedDate
     ? events.filter(event => event.date === selectedDate.toISOString().split('T')[0])
     : []
 
   return (
-    <div>
-      <h1 style={{ textAlign: 'center' }}>地域イベントカレンダー 🏘️</h1>
+    <div className="main-container">
+      <h1 className="app-title">地域イベントカレンダー 🏘️</h1>
 
-      <SearchBar value={query} onChange={setQuery} onSearch={handleSearch} />
+      <div className="search-section">
+        <SearchBar value={query} onChange={setQuery} onSearch={handleSearch} />
+      </div>
 
       {searchResults.length > 0 && (
-        <SearchResults results={searchResults} />
+        <div className="results-section">
+          <SearchResults results={searchResults} />
+        </div>
       )}
 
-      <CalendarView onDateSelect={setSelectedDate} />
+      <div className="calendar-section">
+        <CalendarView onDateSelect={handleDateSelect} />
+      </div>
 
       {selectedDate && (
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <div className="selected-date">
           <strong>選択された日付：</strong> {selectedDate.toDateString()}
         </div>
       )}
 
       {selectedEvents.length > 0 && (
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <div className="event-details">
           <h2>イベント詳細</h2>
           {selectedEvents.map((event, index) => (
-            <div key={index}>
+            <div key={index} className="event-item">
               <h3>{event.title}</h3>
               <p>{event.description}</p>
             </div>
