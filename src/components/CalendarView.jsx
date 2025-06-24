@@ -50,6 +50,7 @@ const CalendarView = ({ onDateSelect }) => {
           }
           return classes.join(' ')
         }}
+        formatDay={(locale, date) => date.getDate()}
       />
 
       {isModalOpen && selectedEvent && (
