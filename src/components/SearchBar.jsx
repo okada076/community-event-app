@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-const SearchBar = ({ onSearch }) => {
-  const [keyword, setKeyword] = useState('')
-
-  const handleSearch = () => {
-    onSearch(keyword.trim())
+const SearchBar = ({ value, onChange, onSearch }) => {
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      onSearch(value)
+    }
   }
 
   return (
@@ -12,11 +12,12 @@ const SearchBar = ({ onSearch }) => {
       <input
         type="text"
         placeholder="キーワードを入力"
-        value={keyword}
-        onChange={(e) => setKeyword(e.target.value)}
+        value={value}
+        onChange={(e) => onChange(e.target.value)} // ← 入力がApp側に反映される！
+        onKeyDown={handleKeyDown}
         style={{ padding: '8px', width: '60%' }}
       />
-      <button onClick={handleSearch} style={{ marginLeft: '10px', padding: '8px 16px' }}>
+      <button onClick={() => onSearch(value)} style={{ marginLeft: '10px', padding: '8px 16px' }}>
         検索
       </button>
     </div>

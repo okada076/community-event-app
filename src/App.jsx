@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import CalendarView from './components/CalendarView'
 import SearchBar from './components/SearchBar'
 import SearchResults from './components/SearchResults'
@@ -7,14 +7,25 @@ import { events } from './data/events'
 function App() {
   const [selectedDate, setSelectedDate] = useState(null)
   const [searchResults, setSearchResults] = useState([])
+  const [query, setQuery] = useState('')
+
+  // 🔍 入力が空になったら検索結果をクリア
+  useEffect(() => {
+    if (query.trim() === '') {
+      setSearchResults([])
+    }
+  }, [query])
 
   const handleSearch = (keyword) => {
-    if (!keyword) {
+    const trimmed = keyword.trim()
+    setQuery(trimmed)
+
+    if (!trimmed) {
       setSearchResults([])
       return
     }
 
-    const lowerKeyword = keyword.toLowerCase()
+    const lowerKeyword = trimmed.toLowerCase()
 
     const filtered = events.filter(event =>
       event.title.toLowerCase().includes(lowerKeyword) ||
@@ -28,15 +39,12 @@ function App() {
     <div>
       <h1 style={{ textAlign: 'center' }}>地域イベントカレンダー 🏘️</h1>
 
-      {/* 🔍 キーワード検索欄 */}
-      <SearchBar onSearch={handleSearch} />
+      <SearchBar value={query} onChange={setQuery} onSearch={handleSearch} />
 
-      {/* 🗂 検索結果一覧（該当イベントがある場合） */}
       {searchResults.length > 0 && (
         <SearchResults results={searchResults} />
       )}
 
-      {/* 📅 カレンダーと日付表示 */}
       <CalendarView onDateSelect={setSelectedDate} />
 
       {selectedDate && (
