@@ -246,11 +246,11 @@ button:hover {
 
 /* オプション：タイルや日付部分も少し丸くしたい場合 */
 .react-calendar__tile {
-  border-radius: 8px;
-}
-
-.react-calendar__tile {
   position: relative;
+  border-radius: 8px;
+  font-size: 1.2rem;     
+  font-weight: 500;      
+  padding: 10px 6px; 
 }
 
 /* イベントありの日付に小さな丸印 */
@@ -306,9 +306,10 @@ button:hover {
 .app-title {
   font-family: 'M PLUS Rounded 1c', sans-serif;
   font-size: 2.2rem;
+  font-weight: 700;
   text-align: center;
   color: #2c3e50;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
