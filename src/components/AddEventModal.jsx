@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const AddEventModal = ({ selectedDate, onSave, onClose }) => {
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
-  const [note, setNote] = useState("");
+  const [description, setDescription] = useState(""); 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -11,11 +11,11 @@ const AddEventModal = ({ selectedDate, onSave, onClose }) => {
       date: selectedDate,
       title,
       location,
-      note,
+      description, 
     });
     setTitle("");
     setLocation("");
-    setNote("");
+    setDescription(""); 
     onClose();
   };
 
@@ -39,8 +39,8 @@ const AddEventModal = ({ selectedDate, onSave, onClose }) => {
           />
           <textarea
             placeholder="メモ（任意）"
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           ></textarea>
           <button type="submit">登録</button>
           <button type="button" onClick={onClose}>キャンセル</button>

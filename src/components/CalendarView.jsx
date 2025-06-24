@@ -3,11 +3,13 @@ import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import { events as initialEvents } from '../data/events'
 import AddEventModal from './AddEventModal'
+import EventModal from './EventModal'
 
 const CalendarView = ({ onDateSelect }) => {
   const [value, setValue] = useState(new Date())
   const [events, setEvents] = useState(() => [...initialEvents])
   const [selectedDate, setSelectedDate] = useState(null)
+  const [selectedEvent, setSelectedEvent] = useState(null)
 
   // 🔹 localStorageから初期読み込み
   useEffect(() => {
@@ -17,10 +19,22 @@ const CalendarView = ({ onDateSelect }) => {
     }
   }, [])
 
-  const handleDateChange = (date) => {
+  const dateToString = (date) => {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+  }
+
+  const handleDateClick = (date) => {
     setValue(date)
     onDateSelect(date)
-    setSelectedDate(date)
+
+    const dateStr = dateToString(date)
+    const event = events.find(e => e.date === dateStr)
+
+    if (event) {
+      setSelectedEvent(event)
+    } else {
+      setSelectedDate(date)
+    }
   }
 
   const handleAddEvent = (eventData) => {
@@ -29,18 +43,14 @@ const CalendarView = ({ onDateSelect }) => {
 
     const updatedEvents = [...events, newEvent]
     setEvents(updatedEvents)
-    localStorage.setItem('events', JSON.stringify(updatedEvents)) // 🔹 ここで保存
+    localStorage.setItem('events', JSON.stringify(updatedEvents))
     setSelectedDate(null)
-  }
-
-  const dateToString = (date) => {
-    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
   }
 
   return (
     <div>
       <Calendar
-        onChange={handleDateChange}
+        onChange={handleDateClick}
         value={value}
         tileClassName={({ date, view }) => {
           const formatted = dateToString(date)
@@ -61,12 +71,20 @@ const CalendarView = ({ onDateSelect }) => {
         formatDay={(locale, date) => date.getDate()}
       />
 
-      {/* モーダル */}
+      {/* イベント登録モーダル */}
       {selectedDate && (
         <AddEventModal
           selectedDate={selectedDate}
           onSave={handleAddEvent}
           onClose={() => setSelectedDate(null)}
+        />
+      )}
+
+      {/* イベント詳細モーダル */}
+      {selectedEvent && (
+        <EventModal
+          event={selectedEvent}
+          onClose={() => setSelectedEvent(null)}
         />
       )}
     </div>
