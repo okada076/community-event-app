@@ -23,11 +23,10 @@ a:hover {
 }
 
 body {
-  min-height: 100vh;
   margin: 0;
   padding: 0;
-  overflow-y: auto;
-  background-color: #fff;
+  background-color: #f7f8fa; /* 少し明るいグレー背景に */
+  font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
 }
 
 h1 {
@@ -142,11 +141,13 @@ button:hover {
 
 
 .main-container {
-  max-width: 900px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 40px 20px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
   text-align: center;
-  box-sizing: border-box;
 }
 
 .app-title {
@@ -154,16 +155,19 @@ button:hover {
   margin-bottom: 30px;
 }
 
-.search-section {
-  margin-bottom: 20px;
-}
-
 .results-section {
   margin-bottom: 30px;
 }
 
 .calendar-section {
+  margin-bottom: 30px;
+}
+
+.search-section {
   margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 .selected-date {
@@ -216,12 +220,24 @@ button:hover {
   color: #bbb;
 }
 
-/* 日曜：赤 */
-.react-calendar__tile.sunday {
+
+/* 日曜日に赤色 */
+.sunday {
   color: red !important;
 }
 
-/* 土曜：青 */
-.react-calendar__tile.saturday {
+/* 土曜日に青色 */
+.saturday {
   color: blue !important;
+}
+
+/* イベントありの日付に小さな丸印 */
+.react-calendar__tile--hasEvent::after {
+  content: '';
+  display: block;
+  margin: 4px auto 0;
+  width: 6px;
+  height: 6px;
+  background-color: #ff5722;
+  border-radius: 50%;
 }

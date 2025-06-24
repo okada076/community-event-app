@@ -1,4 +1,3 @@
-// src/components/CalendarView.jsx
 import React, { useState } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
@@ -31,20 +30,25 @@ const CalendarView = ({ onDateSelect }) => {
   }
 
   return (
-    <div style={{ maxWidth: '500px', margin: '0 auto', padding: '20px' }}>
+    <div>
       <Calendar
         onChange={handleDateChange}
         value={value}
         tileClassName={({ date, view }) => {
-          if (view !== 'month') return null
+          const formatted = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+          const hasEvent = events.some(e => e.date === formatted)
 
-          const isSameMonth = date.getMonth() === value.getMonth()
-          const day = date.getDay()
+          const classes = []
+          if (view === 'month') {
+            const isSameMonth = date.getMonth() === value.getMonth()
+            const day = date.getDay()
 
-          if (!isSameMonth) return null
-          if (day === 0) return 'sunday'    // 日曜
-          if (day === 6) return 'saturday'  // 土曜
-          return null
+            if (!isSameMonth) return null
+            if (day === 0) classes.push('sunday')
+            if (day === 6) classes.push('saturday')
+            if (hasEvent) classes.push('react-calendar__tile--hasEvent')
+          }
+          return classes.join(' ')
         }}
       />
 
