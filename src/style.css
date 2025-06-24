@@ -23,11 +23,11 @@ a:hover {
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
   min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  background-color: #fff;
 }
 
 h1 {
@@ -146,8 +146,8 @@ button:hover {
   margin: 0 auto;
   padding: 40px 20px;
   text-align: center;
+  box-sizing: border-box;
 }
-
 
 .app-title {
   font-size: 2.2rem;
@@ -180,4 +180,38 @@ button:hover {
 
 .event-item {
   margin-bottom: 20px;
+}
+
+/* 曜日の文字（Mon〜Sun）の色を濃く */
+.react-calendar__month-view__weekdays {
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+/* 通常日付のフォントと色 */
+.react-calendar__tile {
+  color: #333;
+  font-size: 15px;
+}
+
+/* 選択中のタイル */
+.react-calendar__tile--active {
+  background: #1976d2;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+/* 今日の日付 */
+.react-calendar__tile--now {
+  background: #fff9c4;
+  color: #000;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+/* 前月・翌月の日付（必要なら少し濃く） */
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #bbb;
 }
