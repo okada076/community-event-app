@@ -255,11 +255,22 @@ button:hover {
 }
 
 .react-calendar__navigation {
-  background-color: #fff;
-  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  margin-bottom: 8px;
+}
+
+.react-calendar__navigation__label {
+  background-color: #f0f0f0; /* グレー背景 */
+  padding: 6px 16px;
+  border-radius: 8px;
   font-size: 1.2rem;
   font-weight: bold;
-  padding: 8px 0;
+  color: #333;
+  cursor: default;
+  text-align: center;
 }
 
 .react-calendar__navigation button {
