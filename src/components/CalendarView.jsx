@@ -9,11 +9,16 @@ const CalendarView = ({ onDateSelect }) => {
   const [selectedEvent, setSelectedEvent] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
+  // ✅ ローカル時間でフォーマットする共通関数（UTCズレ回避）
+  const formatDate = (date) => {
+    const y = date.getFullYear()
+    const m = String(date.getMonth() + 1).padStart(2, '0')
+    const d = String(date.getDate()).padStart(2, '0')
+    return `${y}-${m}-${d}`
+  }
+
   const handleDateChange = (date) => {
     setValue(date)
-
-    const formatDate = (date) =>
-      `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
 
     const formattedDate = formatDate(date)
     const foundEvent = events.find(event => event.date === formattedDate)
@@ -35,8 +40,10 @@ const CalendarView = ({ onDateSelect }) => {
         onChange={handleDateChange}
         value={value}
         tileClassName={({ date, view }) => {
-          const formatted = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+          const formatted = formatDate(date)
           const hasEvent = events.some(e => e.date === formatted)
+
+          console.log('tile:', formatted, 'hasEvent:', hasEvent)
 
           const classes = []
           if (view === 'month') {

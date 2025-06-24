@@ -35,14 +35,21 @@ function App() {
     setSearchResults(filtered)
   }
 
-  // ✅ ここで日付をセット
+  // ✅ ローカル時間でフォーマットする関数（UTC問題対策）
+  const formatDate = (date) => {
+    const y = date.getFullYear()
+    const m = String(date.getMonth() + 1).padStart(2, '0')
+    const d = String(date.getDate()).padStart(2, '0')
+    return `${y}-${m}-${d}`
+  }
+
   const handleDateSelect = (date) => {
     setSelectedDate(date)
   }
 
-  // 🗓️ 選択された日付に対応するイベントだけを抽出
+  // 🗓️ 選択された日付に対応するイベントだけを抽出（ローカル時間で一致）
   const selectedEvents = selectedDate
-    ? events.filter(event => event.date === selectedDate.toISOString().split('T')[0])
+    ? events.filter(event => event.date === formatDate(selectedDate))
     : []
 
   return (
@@ -65,7 +72,7 @@ function App() {
 
       {selectedDate && (
         <div className="selected-date">
-          <strong>選択された日付：</strong> {selectedDate.toDateString()}
+          <strong>選択された日付：</strong> {selectedDate.toLocaleDateString('ja-JP', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })}
         </div>
       )}
 
