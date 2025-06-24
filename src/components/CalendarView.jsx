@@ -1,9 +1,9 @@
 // src/components/CalendarView.jsx
 import React, { useState } from 'react'
 import Calendar from 'react-calendar'
-import 'react-calendar/dist/Calendar.css' // 標準CSSの読み込み
-import { events } from '../data/events';
-import EventModal from './EventModal';
+import 'react-calendar/dist/Calendar.css'
+import { events } from '../data/events'
+import EventModal from './EventModal'
 
 const CalendarView = ({ onDateSelect }) => {
   const [value, setValue] = useState(new Date())
@@ -12,8 +12,10 @@ const CalendarView = ({ onDateSelect }) => {
 
   const handleDateChange = (date) => {
     setValue(date)
+
     const formatDate = (date) =>
-  `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+      `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+
     const formattedDate = formatDate(date)
     const foundEvent = events.find(event => event.date === formattedDate)
 
@@ -33,10 +35,21 @@ const CalendarView = ({ onDateSelect }) => {
       <Calendar
         onChange={handleDateChange}
         value={value}
+        tileClassName={({ date, view }) => {
+          if (view !== 'month') return null
+
+          const isSameMonth = date.getMonth() === value.getMonth()
+          const day = date.getDay()
+
+          if (!isSameMonth) return null
+          if (day === 0) return 'sunday'    // 日曜
+          if (day === 6) return 'saturday'  // 土曜
+          return null
+        }}
       />
 
       {isModalOpen && selectedEvent && (
-        <EventModal 
+        <EventModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           event={selectedEvent}
@@ -47,13 +60,3 @@ const CalendarView = ({ onDateSelect }) => {
 }
 
 export default CalendarView
-
-
-
-
-
-
-
-
-
-
