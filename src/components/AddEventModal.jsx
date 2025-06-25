@@ -5,10 +5,15 @@ const AddEventModal = ({ selectedDate, onSave, onClose }) => {
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState(""); 
 
+  // ✅ 選択された日付を文字列（YYYY-MM-DD）で初期化
+  const [date, setDate] = useState(
+    selectedDate ? selectedDate.toISOString().substr(0, 10) : ""
+  );
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onSave({
-      date: selectedDate,
+      date,  // ← ここを selectedDate ではなく、選択された文字列にする
       title,
       location,
       description, 
@@ -16,14 +21,22 @@ const AddEventModal = ({ selectedDate, onSave, onClose }) => {
     setTitle("");
     setLocation("");
     setDescription(""); 
+    setDate("");
     onClose();
   };
 
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <h2>{selectedDate.toDateString()}</h2>
+        <h2>イベント登録</h2>
         <form onSubmit={handleSubmit}>
+          {/* ✅ 日付入力欄を追加 */}
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            required
+          />
           <input
             type="text"
             placeholder="イベントタイトル"

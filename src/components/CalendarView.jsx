@@ -8,10 +8,9 @@ import EventModal from './EventModal'
 const CalendarView = ({ onDateSelect }) => {
   const [value, setValue] = useState(new Date())
   const [events, setEvents] = useState(() => [...initialEvents])
-  const [selectedDate, setSelectedDate] = useState(null)
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const [selectedEvent, setSelectedEvent] = useState(null)
 
-  // 🔹 localStorageから初期読み込み
   useEffect(() => {
     const saved = localStorage.getItem('events')
     if (saved) {
@@ -30,25 +29,32 @@ const CalendarView = ({ onDateSelect }) => {
     const dateStr = dateToString(date)
     const event = events.find(e => e.date === dateStr)
 
+    setSelectedEvent(null)
+
     if (event) {
       setSelectedEvent(event)
-    } else {
-      setSelectedDate(date)
     }
   }
 
   const handleAddEvent = (eventData) => {
-    const formattedDate = dateToString(selectedDate)
-    const newEvent = { ...eventData, date: formattedDate }
+    const newEvent = {
+      ...eventData,
+      date: eventData.date // ← すでに "YYYY-MM-DD" なのでそのまま使う
+    }
 
     const updatedEvents = [...events, newEvent]
     setEvents(updatedEvents)
     localStorage.setItem('events', JSON.stringify(updatedEvents))
-    setSelectedDate(null)
+    setIsAddModalOpen(false)
+  }
+
+  const handleOpenAddEvent = () => {
+    setSelectedEvent(null)
+    setIsAddModalOpen(true)
   }
 
   return (
-    <div>
+    <div className="calendar-container">
       <Calendar
         onChange={handleDateClick}
         value={value}
@@ -71,12 +77,17 @@ const CalendarView = ({ onDateSelect }) => {
         formatDay={(locale, date) => date.getDate()}
       />
 
-      {/* イベント登録モーダル */}
-      {selectedDate && (
+      {/* 登録ボタン */}
+      <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+        <button onClick={handleOpenAddEvent}>＋イベント登録</button>
+      </div>
+
+      {/* イベント登録モーダル（自由に日付を選べる） */}
+      {isAddModalOpen && (
         <AddEventModal
-          selectedDate={selectedDate}
+          selectedDate={null} // 最初の表示だけ空でもOK
           onSave={handleAddEvent}
-          onClose={() => setSelectedDate(null)}
+          onClose={() => setIsAddModalOpen(false)}
         />
       )}
 
