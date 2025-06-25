@@ -1,6 +1,6 @@
 import React from 'react'
 
-const EventModal = ({ event, onClose }) => {
+const EventModal = ({ event, onClose, onDelete }) => {
   if (!event) return null;
 
   return (
@@ -8,14 +8,17 @@ const EventModal = ({ event, onClose }) => {
       <div className="modal-content">
         <h2>イベント詳細</h2>
         <div>
-          <p><strong>タイトル：</strong> {event.title}</p>
-          {event.location && <p><strong>場所：</strong> {event.location}</p>}
-          {event.description && <p><strong>メモ：</strong> {event.description}</p>}
+          <strong>{event.title}</strong><br />
+          {event.location && <p>📍 {event.location}</p>}
+          {event.description && <p>{event.description}</p>}
         </div>
         <button onClick={onClose}>閉じる</button>
+        <button onClick={() => onDelete(event)} style={{ color: 'red' }}>
+          削除
+        </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default EventModal;
+export default EventModal

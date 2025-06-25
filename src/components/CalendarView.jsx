@@ -8,9 +8,10 @@ import EventModal from './EventModal'
 const CalendarView = ({ onDateSelect }) => {
   const [value, setValue] = useState(new Date())
   const [events, setEvents] = useState(() => [...initialEvents])
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
+  const [selectedDate, setSelectedDate] = useState(null)
   const [selectedEvent, setSelectedEvent] = useState(null)
 
+  // 初回読み込み：localStorageから
   useEffect(() => {
     const saved = localStorage.getItem('events')
     if (saved) {
@@ -29,6 +30,8 @@ const CalendarView = ({ onDateSelect }) => {
     const dateStr = dateToString(date)
     const event = events.find(e => e.date === dateStr)
 
+    // モーダル重複防止
+    setSelectedDate(null)
     setSelectedEvent(null)
 
     if (event) {
@@ -37,20 +40,25 @@ const CalendarView = ({ onDateSelect }) => {
   }
 
   const handleAddEvent = (eventData) => {
-    const newEvent = {
-      ...eventData,
-      date: eventData.date // ← すでに "YYYY-MM-DD" なのでそのまま使う
-    }
+    const formattedDate = dateToString(eventData.date)
+    const newEvent = { ...eventData, date: formattedDate }
 
     const updatedEvents = [...events, newEvent]
     setEvents(updatedEvents)
     localStorage.setItem('events', JSON.stringify(updatedEvents))
-    setIsAddModalOpen(false)
+    setSelectedDate(null)
   }
 
   const handleOpenAddEvent = () => {
     setSelectedEvent(null)
-    setIsAddModalOpen(true)
+    setSelectedDate(new Date())
+  }
+
+  const handleDeleteEvent = (eventToDelete) => {
+    const updatedEvents = events.filter(e => !(e.date === eventToDelete.date && e.title === eventToDelete.title))
+    setEvents(updatedEvents)
+    localStorage.setItem('events', JSON.stringify(updatedEvents))
+    setSelectedEvent(null)
   }
 
   return (
@@ -77,25 +85,23 @@ const CalendarView = ({ onDateSelect }) => {
         formatDay={(locale, date) => date.getDate()}
       />
 
-      {/* 登録ボタン */}
       <div style={{ textAlign: 'center', marginTop: '1rem' }}>
         <button onClick={handleOpenAddEvent}>＋イベント登録</button>
       </div>
 
-      {/* イベント登録モーダル（自由に日付を選べる） */}
-      {isAddModalOpen && (
+      {selectedDate && (
         <AddEventModal
-          selectedDate={null} // 最初の表示だけ空でもOK
+          selectedDate={selectedDate}
           onSave={handleAddEvent}
-          onClose={() => setIsAddModalOpen(false)}
+          onClose={() => setSelectedDate(null)}
         />
       )}
 
-      {/* イベント詳細モーダル */}
       {selectedEvent && (
         <EventModal
           event={selectedEvent}
           onClose={() => setSelectedEvent(null)}
+          onDelete={handleDeleteEvent}
         />
       )}
     </div>
