@@ -85,6 +85,19 @@ const CalendarView = ({ onDateSelect }) => {
         formatDay={(locale, date) => date.getDate()}
       />
 
+      <p style={{
+         textAlign: 'center',
+         marginTop: '1.5rem',
+         marginBottom: '0.5rem',
+         fontSize: '1rem',
+         lineHeight: '1.6',
+        color: '#444'
+       }}>
+          地域のイベントを誰でも自由に登録できます！<br />
+           つながりの場としてご活用ください。
+        </p>
+
+
       <div style={{ textAlign: 'center', marginTop: '1rem' }}>
         <button onClick={handleOpenAddEvent}>＋イベント登録</button>
       </div>
